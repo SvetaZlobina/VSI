@@ -14,18 +14,8 @@ public:
     void run();
     bool Stop = false;
 
-    void heapify(QVector<double>& arr, int n, int i);
-    void heapSort(QVector<double>& arr, int n);
-    void insertionSort(QVector<double>& arr);
-    void quickSort(QVector<double>& arr, int l, int r);
-    void shellSort( QVector <double>& arr);
-
-    int sortNumber = 2;
-    QVector<double> arr;
-    int ind1, ind2;
-
     QVector< QVector<int> > map;
-
+    int ind1, ind2;
 
 signals:
     void NumberChanged();
