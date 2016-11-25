@@ -5,6 +5,7 @@
 #include <QtGui>
 #include <QtCore>
 #include "mythread.h"
+#include "fpthread.h"
 #include <QVector>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -25,6 +26,7 @@ public:
     explicit PrintDialog(QWidget *parent = 0);
     ~PrintDialog();
     MyThread* th;
+    FPThread* fp;
     bool drawFlag = false;
 
 protected:

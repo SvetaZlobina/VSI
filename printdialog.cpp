@@ -10,7 +10,11 @@ PrintDialog::PrintDialog(QWidget *parent) :
 
     th = new MyThread();
     connect(th, SIGNAL(NumberChanged()), this, SLOT(onNumberChanged()));
-    th->start();
+    //th->start();
+
+    fp = new FPThread();
+    connect(fp, SIGNAL(NumberChanged()), this, SLOT(onNumberChanged()));
+    fp->start();
 }
 
 void PrintDialog::onNumberChanged()
@@ -59,24 +63,52 @@ void PrintDialog :: paintEvent(QPaintEvent* e)
 
          }
 */
-         for(int i =0; i < th->map.size()+1; i++)
+         /*for(int i =0; i < th->map.size()+1; i++)
          {
              painter.drawLine(QPoint(i*10, 0), QPoint(i*10, 100*count));
              painter.drawLine(QPoint(0, i*10), QPoint(100*count, i*10));
-         }
+         }*/
 
 
-         for(int i = 0; i < th->map.size(); i++)
+
+        /* for(int i = 0; i < fp->map.size(); i++)
          {
-             for(int j = 0; j < th->map[i].size(); j++)
+             for(int j = 0; j < fp->map[i].size(); j++)
              {
-                 if(th->map[i][j] == -1)
+                 if(fp->map[i][j] == -1)
                  {
+                     painter.drawRect(i*10,j*10,10,10);
+                 }
+             }
+         }*/
+
+        if(fp->path.size() == 0)
+         for(int i = 0; i < fp->map.size(); i++)
+         {
+             for(int j = 0; j < fp->map[i].size(); j++)
+             {
+                 if(fp->map[i][j] == 9999)
+                 {
+                     brush.setColor(Qt :: black);
+                     painter.setBrush(brush);
+                     painter.drawRect(i*10,j*10,10,10);
+                 }
+                 else if(fp->map[i][j] == 7)
+                 {
+                     brush.setColor(Qt :: green);
+                     painter.setBrush(brush);
                      painter.drawRect(i*10,j*10,10,10);
                  }
              }
          }
 
+         for(int i = 0; i < fp->path.size(); i++)
+         {
+
+             brush.setColor(Qt :: red);
+             painter.setBrush(brush);
+             painter.drawRect(fp->path[i].first*10,fp->path[i].second*10,10,10);
+         }
 
 
          drawFlag = false;

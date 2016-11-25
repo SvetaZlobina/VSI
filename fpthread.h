@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <QVector>
+#include <QDebug>
 
 
 
@@ -14,7 +15,8 @@ public:
     void run();
     bool Stop = false;
 
-    QVector< QVector<int> > map;
+    QVector<QVector<int>> map;
+    QVector<QPair<int,int>> path;
     int ind1, ind2;
 
 signals:
