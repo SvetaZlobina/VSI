@@ -13,6 +13,9 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 #include <QDebug>
+#include <QMessageBox>
+#include <QMouseEvent>
+
 
 namespace Ui {
 class PrintDialog;
@@ -28,6 +31,7 @@ public:
     MyThread* th;
     FPThread* fp;
     bool drawFlag = false;
+    void mouseReleaseEvent ( QMouseEvent * event );
 
 protected:
     void paintEvent(QPaintEvent* e);

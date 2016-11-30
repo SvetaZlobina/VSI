@@ -16,12 +16,16 @@ SOURCES += main.cpp\
         dialog.cpp \
     mythread.cpp \
     printdialog.cpp \
-    fpthread.cpp
+    fpthread.cpp \
+    mapdialog.cpp
 
 HEADERS  += dialog.h \
     mythread.h \
     printdialog.h \
-    fpthread.h
+    fpthread.h \
+    mapdialog.h
 
-FORMS    += dialog.ui \
-    printdialog.ui
+FORMS    += \
+    printdialog.ui \
+    dialog.ui \
+    mapdialog.ui

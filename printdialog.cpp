@@ -23,6 +23,18 @@ void PrintDialog::onNumberChanged()
     update();
 }
 
+void PrintDialog :: mouseReleaseEvent ( QMouseEvent * event )
+    {
+      if(event->button() == Qt::LeftButton)
+      {
+        QMessageBox* msgBox = new QMessageBox();
+        msgBox->setWindowTitle("Hello");
+        msgBox->setText("You Clicked Right Mouse Button");
+        msgBox->show();
+      }
+
+    }
+
 void PrintDialog :: paintEvent(QPaintEvent* e)
  {
      if(drawFlag)
@@ -82,7 +94,7 @@ void PrintDialog :: paintEvent(QPaintEvent* e)
              }
          }*/
 
-        if(fp->path.size() == 0)
+        //if(fp->path.size() == 0)
          for(int i = 0; i < fp->map.size(); i++)
          {
              for(int j = 0; j < fp->map[i].size(); j++)
@@ -93,7 +105,7 @@ void PrintDialog :: paintEvent(QPaintEvent* e)
                      painter.setBrush(brush);
                      painter.drawRect(i*10,j*10,10,10);
                  }
-                 else if(fp->map[i][j] == 7)
+                 else if(fp->map[i][j] != 9999 && fp->map[i][j] != -1)
                  {
                      brush.setColor(Qt :: green);
                      painter.setBrush(brush);

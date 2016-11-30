@@ -1,6 +1,7 @@
 #include "fpthread.h"
 
-const int N = 20;
+
+const int N = 50;
 const int WALL = 9999;
 QVector< QPair<int, int>> wave;
 QVector< QPair <int, int> > oldWave;
@@ -52,6 +53,8 @@ FPThread::FPThread(QObject* parent): QThread(parent)
 }
 
 
+
+
 void FPThread :: run()
 {
 
@@ -69,18 +72,14 @@ void FPThread :: run()
                     if (map[nx][ny] == -1)
                     {
                         wave.push_back(QPair<int, int>(nx, ny));
-                        map[nx][ny] = 7;//nstep;
+                        map[nx][ny] = nstep;//nstep;
 
                         emit NumberChanged();
                         msleep(sT);
-                        qDebug() << QString ::number(nx) << "  " << QString ::number(ny);
                         if (nx == N - 3 && ny == N - 3)
                         {
-                            qDebug() << "done";
                             goto done;
-
                         }
-
                     }
                 }
             }
@@ -91,19 +90,19 @@ void FPThread :: run()
         int y = N - 3;
         wave.clear();
         wave.push_back(QPair<int, int>(x, y));
-        qDebug() << QString ::number(map[x][y]);
+
         while (map[x][y] != 0)
         {
             for (int d = 0; d < 4; ++d)
             {
                 int nx = x + dx[d];
                 int ny = y + dy[d];
+
                 if (map[x][y] - 1 == map[nx][ny])
                 {
                     x = nx;
                     y = ny;
                     path.push_back(QPair<int, int>(x, y));
-                    qDebug() << "fp->map.size()";
                     break;
                 }
             }

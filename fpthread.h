@@ -19,6 +19,8 @@ public:
     QVector<QPair<int,int>> path;
     int ind1, ind2;
 
+
+
 signals:
     void NumberChanged();
 };
