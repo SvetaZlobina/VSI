@@ -23,16 +23,49 @@ void MapDialog::onNumberChanged()
     update();
 }
 
-void MapDialog :: mouseReleaseEvent ( QMouseEvent * event )
+
+bool draw;
+
+void MapDialog::mousePressEvent(QMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton)
+    if (event->button() == Qt::LeftButton && event->pos().x() < cellNum*cellSize && event->pos().y() < cellNum*cellSize)
     {
-        QMessageBox* msgBox = new QMessageBox();
-        msgBox->setWindowTitle("Hello");
-        msgBox->setText("You Clicked Right Mouse Button");
-        msgBox->show();
+        x = event->pos().x()/10;
+        y = event->pos().y()/10;
+
+        if(fp->map[x][y] == 9999) fp->map[x][y] = -1;
+        else fp->map[x][y] = 9999;
+
+        draw = true;
     }
 }
+
+void MapDialog :: mouseMoveEvent ( QMouseEvent * event )
+{
+    //qDebug() << event->pos().x();
+    if(event->buttons() == Qt::LeftButton)
+    {
+        if(event->pos().x()/10 != x || event->pos().y()/10 != y)
+        {
+            x = event->pos().x()/10;
+            y = event->pos().y()/10;
+            if(fp->map[x][y] == 9999) fp->map[x][y] = -1;
+            else fp->map[x][y] = 9999;
+        }
+
+
+    }
+}
+
+void MapDialog::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton && draw)
+    {
+        draw = false;
+    }
+}
+
+
 
 void MapDialog :: paintEvent(QPaintEvent* e)
  {
@@ -80,4 +113,9 @@ void MapDialog :: paintEvent(QPaintEvent* e)
          }
 
      }
+}
+
+void MapDialog::on_pushButton_clicked()
+{
+    fp->finding = true;
 }

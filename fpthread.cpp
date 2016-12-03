@@ -18,37 +18,25 @@ FPThread::FPThread(QObject* parent): QThread(parent)
         QVector<int> a;
         for (int j = 0; j < N; j++)
         {
-            a.push_back(0);
+            a.push_back(-1);
         }
         map.push_back(a);
     }
 
-    /*for(int i = 0; i < 20; i++)
+
+    for (int i = 0; i < N; ++i)
     {
-        map[i][0] = map[0][i] = map[19][i] = map[i][19] = -1;
-    }*/
-
-        for (int i = 0; i < N; ++i)
-            for (int j = 0; j < N; ++j)
-            {
-                if (qrand() % 4 == 0)
-                    map[i][j] = WALL;
-                else
-                    map[i][j] = -1;
-            }
-        for (int i = 0; i < N; ++i)
-        {
-            map[i][0] = WALL;
-            map[0][i] = WALL;
-            map[i][N - 1] = WALL;
-            map[N - 1][i] = WALL;
-        }
+        map[i][0] = WALL;
+        map[0][i] = WALL;
+        map[i][N - 1] = WALL;
+        map[N - 1][i] = WALL;
+    }
 
 
 
-        oldWave.push_back(QPair<int, int>(1, 1));
+    oldWave.push_back(QPair<int, int>(1, 1));
 
-        map[1][1] = nstep;
+    map[1][1] = nstep;
 
 }
 
@@ -57,57 +45,63 @@ FPThread::FPThread(QObject* parent): QThread(parent)
 
 void FPThread :: run()
 {
+    while(1)
+    {
+        emit NumberChanged();
+        msleep(sT);
 
-
-        while (oldWave.size() > 0)
+        if(finding)
         {
-            ++nstep;
-            wave.clear();
-            for (QVector<QPair<int, int> >::iterator i = oldWave.begin(); i != oldWave.end(); ++i)
+            while (oldWave.size() > 0)
             {
-                for (int d = 0; d < 4; ++d)
+                ++nstep;
+                wave.clear();
+                for (QVector<QPair<int, int> >::iterator i = oldWave.begin(); i != oldWave.end(); ++i)
                 {
-                    int nx = i -> first + dx[d];
-                    int ny = i -> second + dy[d];
-                    if (map[nx][ny] == -1)
+                    for (int d = 0; d < 4; ++d)
                     {
-                        wave.push_back(QPair<int, int>(nx, ny));
-                        map[nx][ny] = nstep;//nstep;
-
-                        emit NumberChanged();
-                        msleep(sT);
-                        if (nx == N - 3 && ny == N - 3)
+                        int nx = i -> first + dx[d];
+                        int ny = i -> second + dy[d];
+                        if (map[nx][ny] == -1)
                         {
-                            goto done;
+                            wave.push_back(QPair<int, int>(nx, ny));
+                            map[nx][ny] = nstep;//nstep;
+
+                            emit NumberChanged();
+                            msleep(sT);
+                            if (nx == N - 3 && ny == N - 3)
+                            {
+                                goto done;
+                            }
                         }
                     }
                 }
+                oldWave = wave;
             }
-            oldWave = wave;
-        }
-     done:
-        int x = N - 3;
-        int y = N - 3;
-        wave.clear();
-        wave.push_back(QPair<int, int>(x, y));
+         done:
+            int x = N - 3;
+            int y = N - 3;
+            wave.clear();
+            wave.push_back(QPair<int, int>(x, y));
 
-        while (map[x][y] != 0)
-        {
-            for (int d = 0; d < 4; ++d)
+            while (map[x][y] != 0)
             {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
-
-                if (map[x][y] - 1 == map[nx][ny])
+                for (int d = 0; d < 4; ++d)
                 {
-                    x = nx;
-                    y = ny;
-                    path.push_back(QPair<int, int>(x, y));
-                    break;
+                    int nx = x + dx[d];
+                    int ny = y + dy[d];
+
+                    if (map[x][y] - 1 == map[nx][ny])
+                    {
+                        x = nx;
+                        y = ny;
+                        path.push_back(QPair<int, int>(x, y));
+                        break;
+                    }
                 }
             }
+            finding = false;
         }
 
-        emit NumberChanged();
-        msleep(sT);
+    }
 }

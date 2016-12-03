@@ -23,7 +23,13 @@ public:
     ~MapDialog();
 
     bool drawFlag = false;
+    void mouseMoveEvent ( QMouseEvent * event );
+    void mousePressEvent ( QMouseEvent * event );
     void mouseReleaseEvent ( QMouseEvent * event );
+
+    int x, y;
+    int cellSize = 10;
+    int cellNum = 50;
 
     FPThread* fp;
 
@@ -35,6 +41,8 @@ private:
 
 public slots:
     void onNumberChanged();
+private slots:
+    void on_pushButton_clicked();
 };
 
 #endif // MAPDIALOD_H

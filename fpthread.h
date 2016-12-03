@@ -19,6 +19,9 @@ public:
     QVector<QPair<int,int>> path;
     int ind1, ind2;
 
+    //void work();
+    bool finding = false;
+
 
 
 signals:
