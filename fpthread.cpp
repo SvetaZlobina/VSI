@@ -36,8 +36,12 @@ FPThread::FPThread(QObject* parent): QThread(parent)
 
     oldWave.push_back(QPair<int, int>(1, 1));
 
-    map[1][1] = nstep;
-
+    st.first = 10;
+    st.second = 10;
+    end.first = 30;
+    end.second = 30;
+    map[st.first][st.second] = nstep;
+    map[end.first][end.second] = 19; //any number
 }
 
 
@@ -69,7 +73,7 @@ void FPThread :: run()
 
                             emit NumberChanged();
                             msleep(sT);
-                            if (nx == N - 3 && ny == N - 3)
+                            if (nx == end.first && ny == end.second)
                             {
                                 goto done;
                             }
@@ -79,8 +83,8 @@ void FPThread :: run()
                 oldWave = wave;
             }
          done:
-            int x = N - 3;
-            int y = N - 3;
+            int x = end.first;
+            int y = end.second;
             wave.clear();
             wave.push_back(QPair<int, int>(x, y));
 

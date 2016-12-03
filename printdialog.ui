@@ -16,6 +16,24 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>440</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Swaps: </string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -28,7 +28,7 @@ public:
     void mouseReleaseEvent ( QMouseEvent * event );
 
     int x, y;
-    int cellSize = 10;
+    int cellSize = 12;
     int cellNum = 50;
 
     FPThread* fp;
@@ -43,6 +43,7 @@ public slots:
     void onNumberChanged();
 private slots:
     void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
 };
 
 #endif // MAPDIALOD_H

@@ -2,24 +2,20 @@
 #include <QtCore>
 
 MyThread::MyThread(QObject* parent): QThread(parent)
-{
-    for (int i = 0; i < 20; i++)
-        {
-            QVector<int> a;
-            for (int j = 0; j < 20; j++)
-            {
-                a.push_back(0);
-            }
-            map.push_back(a);
-        }
-
-        for(int i = 0; i < 20; i++)
-        {
-            map[i][0] = map[0][i] = map[19][i] = map[i][19] = -1;
-        }
-}
+{}
 
 int sleepTime = 50;
+
+template<class T>
+void MyThread :: Swap(T& a, T& b, int i1, int i2)
+{
+    qSwap(a, b);
+    swaps++;
+    ind1 = i1;
+    ind2 = i2;
+    emit NumberChanged();
+    msleep(sleepTime);
+}
 
 void MyThread :: quickSort(QVector<double>& arr, int l, int r)
 {
@@ -32,12 +28,7 @@ void MyThread :: quickSort(QVector<double>& arr, int l, int r)
         while(arr[j] > x) j--;
         if(i <= j)
         {
-            qSwap(arr[i], arr[j]);
-            ind1 = j;
-            ind2 = i;
-
-            emit NumberChanged();
-            msleep(sleepTime);
+            Swap(arr[i], arr[j], i, j);
 
             i++;
             j--;
@@ -64,15 +55,8 @@ void MyThread :: shellSort( QVector <double>& arr)
         {
                if (arr[i + d] < arr[i])
               {
-                      qSwap(arr[i], arr[i+d]);
-                      ind1 = i;
-                      ind2 = i+d;
-
-
-                      emit NumberChanged();
-                      msleep(sleepTime);
-
-                      flag = 1;
+                   Swap(arr[i], arr[i+d], i, i+d);
+                   flag = 1;
               }
          }
      }
@@ -87,13 +71,7 @@ void MyThread :: insertionSort(QVector<double> arr)
          j = i;
          while (j > 0 && arr[j - 1] > arr[j])
          {
-             qSwap(arr[j], arr[j-1]);
-             ind1 = j;
-             ind2 = j-1;
-
-             emit NumberChanged();
-             msleep(sleepTime);
-
+             Swap(arr[j], arr[j-1], j, j-1);
              j--;
          }
      }
@@ -113,12 +91,7 @@ void MyThread :: heapify(QVector<double>& arr, int n, int i)
 
     if (largest != i)
     {
-        qSwap(arr[i], arr[largest]);
-        ind1 = i;
-        ind2 = largest;
-        emit NumberChanged();
-        msleep(sleepTime);
-
+        Swap(arr[i], arr[largest], i, largest);
         heapify(arr, n, largest);
     }
 }
@@ -130,12 +103,7 @@ void MyThread :: heapSort(QVector<double>& arr, int n)
 
     for (int i = n - 1; i >= 0; i--)
     {
-        qSwap(arr[0], arr[i]);
-        ind1 = 0;
-        ind2 = i;
-        emit NumberChanged();
-        msleep(sleepTime);
-
+        Swap(arr[0], arr[i], 0, i);
         heapify(arr, i, 0);
     }
 }

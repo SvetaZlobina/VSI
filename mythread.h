@@ -23,7 +23,13 @@ public:
     QVector<double> arr;
     int ind1, ind2;
 
-    QVector< QVector<int> > map;
+    int swaps = 0;
+
+    template<class T>
+    void Swap(T a, T b);
+
+    template<class T>
+    void Swap(T& a, T& b, int i1, int i2);
 
 
 signals:

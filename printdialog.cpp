@@ -10,11 +10,8 @@ PrintDialog::PrintDialog(QWidget *parent) :
 
     th = new MyThread();
     connect(th, SIGNAL(NumberChanged()), this, SLOT(onNumberChanged()));
-    //th->start();
+    th->start();
 
-    fp = new FPThread();
-    connect(fp, SIGNAL(NumberChanged()), this, SLOT(onNumberChanged()));
-    fp->start();
 }
 
 void PrintDialog::onNumberChanged()
@@ -52,7 +49,7 @@ void PrintDialog :: paintEvent(QPaintEvent* e)
 
          painter.setBrush(brush);
 
-       /*  for(int i = 0; i < th->arr.size(); i++)
+         for(int i = 0; i < th->arr.size(); i++)
          {
              if(i == th->ind1 || i == th->ind2)
              {
@@ -74,58 +71,9 @@ void PrintDialog :: paintEvent(QPaintEvent* e)
             // painter.drawLine(i,500-th->arr[i]*8, i, 500  );
 
          }
-*/
-         /*for(int i =0; i < th->map.size()+1; i++)
-         {
-             painter.drawLine(QPoint(i*10, 0), QPoint(i*10, 100*count));
-             painter.drawLine(QPoint(0, i*10), QPoint(100*count, i*10));
-         }*/
 
-
-
-        /* for(int i = 0; i < fp->map.size(); i++)
-         {
-             for(int j = 0; j < fp->map[i].size(); j++)
-             {
-                 if(fp->map[i][j] == -1)
-                 {
-                     painter.drawRect(i*10,j*10,10,10);
-                 }
-             }
-         }*/
-
-        //if(fp->path.size() == 0)
-         for(int i = 0; i < fp->map.size(); i++)
-         {
-             for(int j = 0; j < fp->map[i].size(); j++)
-             {
-                 if(fp->map[i][j] == 9999)
-                 {
-                     brush.setColor(Qt :: black);
-                     painter.setBrush(brush);
-                     painter.drawRect(i*10,j*10,10,10);
-                 }
-                 else if(fp->map[i][j] != 9999 && fp->map[i][j] != -1)
-                 {
-                     brush.setColor(Qt :: green);
-                     painter.setBrush(brush);
-                     painter.drawRect(i*10,j*10,10,10);
-                 }
-             }
-         }
-
-         for(int i = 0; i < fp->path.size(); i++)
-         {
-
-             brush.setColor(Qt :: red);
-             painter.setBrush(brush);
-             painter.drawRect(fp->path[i].first*10,fp->path[i].second*10,10,10);
-         }
-
-
+         ui->label->setText("Swaps:  " + QString :: number(th->swaps));
          drawFlag = false;
-         (this->grab(QRect(0,0,width(),height()))).save("C:\\Users\\Yan\\Desktop\\some.png");
-
      }
 }
 
