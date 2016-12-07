@@ -31,7 +31,6 @@ public:
     MyThread* th;
     FPThread* fp;
     bool drawFlag = false;
-    void mouseReleaseEvent ( QMouseEvent * event );
 
 protected:
     void paintEvent(QPaintEvent* e);

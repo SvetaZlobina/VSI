@@ -148,4 +148,6 @@ void MapDialog::on_pushButton_2_clicked()
 
         fp->map[1][1] = 0;
     }
+
+    fp->path.clear();
 }

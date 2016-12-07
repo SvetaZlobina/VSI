@@ -20,18 +20,6 @@ void PrintDialog::onNumberChanged()
     update();
 }
 
-void PrintDialog :: mouseReleaseEvent ( QMouseEvent * event )
-    {
-      if(event->button() == Qt::LeftButton)
-      {
-        QMessageBox* msgBox = new QMessageBox();
-        msgBox->setWindowTitle("Hello");
-        msgBox->setText("You Clicked Right Mouse Button");
-        msgBox->show();
-      }
-
-    }
-
 void PrintDialog :: paintEvent(QPaintEvent* e)
  {
      if(drawFlag)

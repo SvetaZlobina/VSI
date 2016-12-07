@@ -9,7 +9,7 @@ const int dx[] = { 0, 1, 0, -1 };
 const int dy[] = { -1, 0, 1, 0 };
 int nstep = 0;
 
-int sT = 20;
+int sT = 40;
 
 FPThread::FPThread(QObject* parent): QThread(parent)
 {
@@ -34,14 +34,17 @@ FPThread::FPThread(QObject* parent): QThread(parent)
 
 
 
-    oldWave.push_back(QPair<int, int>(1, 1));
+
 
     st.first = 10;
     st.second = 10;
     end.first = 30;
     end.second = 30;
     map[st.first][st.second] = nstep;
-    map[end.first][end.second] = 19; //any number
+    //map[end.first][end.second] = 19; //any number
+
+
+    oldWave.push_back(QPair<int, int>(st.first, st.second));
 }
 
 
@@ -71,8 +74,6 @@ void FPThread :: run()
                             wave.push_back(QPair<int, int>(nx, ny));
                             map[nx][ny] = nstep;//nstep;
 
-                            emit NumberChanged();
-                            msleep(sT);
                             if (nx == end.first && ny == end.second)
                             {
                                 goto done;
@@ -81,6 +82,8 @@ void FPThread :: run()
                     }
                 }
                 oldWave = wave;
+                emit NumberChanged();
+                msleep(sT);
             }
          done:
             int x = end.first;
